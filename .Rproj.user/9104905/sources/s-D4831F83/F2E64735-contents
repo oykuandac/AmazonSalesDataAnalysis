@@ -1,0 +1,25 @@
+
+data = read.csv("AmazonSales.csv")
+
+
+totalSaleOfEachProduct=summary(as.factor(trimws(data[,c("Product")])))
+print(totalSaleOfEachProduct)
+
+totalSaleOfEachCountry = summary(as.factor(trimws(data[,c("Country")])))
+print(totalSaleOfEachCountry)
+
+mastercardPrice = 0
+count = 1
+df = data[,c("Payment_Type","Price")]
+for (payment in df$Payment_Type) {
+  if ( payment == trimws("Mastercard")){
+    mastercardPrice = mastercardPrice + strtoi(gsub(",","",trimws(df$Price)[count]))
+  }
+  count = count + 1
+}
+print(mastercardPrice)
+
+library(ggplot2)
+ggplot(data, aes(x = trimws(data$Product), y = data$Price))+ geom_point()
+
+
